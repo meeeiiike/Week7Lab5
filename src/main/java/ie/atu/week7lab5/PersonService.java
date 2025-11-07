@@ -26,12 +26,16 @@ public class PersonService {
     }
 
     public Person update(String employeeId, Person person) {
-        Person updatedPerson = personRepository.findByEmployeeId(employeeId).orElseThrow(() -> new IllegalArgumentException("Person with id " + employeeId + " not found"));
-        updatedPerson.setName(person.getName());
-        updatedPerson.setEmail(person.getEmail());
-        updatedPerson.setPosition(person.getPosition());
-        updatedPerson.setDepartment(person.getDepartment());
-        return personRepository.save(updatedPerson);
+        Person toUpdate = personRepository.findByEmployeeId(employeeId).orElseThrow(() -> new IllegalArgumentException("Person with id " + employeeId + " not found"));
+        toUpdate.setName(person.getName());
+        toUpdate.setEmail(person.getEmail());
+        toUpdate.setPosition(person.getPosition());
+        toUpdate.setDepartment(person.getDepartment());
+        return personRepository.save(toUpdate);
     }
 
+    public void delete(String employeeId) {
+        Person toDelete = personRepository.findByEmployeeId(employeeId).orElseThrow(() -> new IllegalArgumentException("Person with id " + employeeId + " not found"));
+        personRepository.delete(toDelete);
+    }
 }
